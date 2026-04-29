@@ -1,0 +1,25 @@
+<div class="card rasta-card mb-3">
+	<div class="card-header">
+		<h6 class="mb-0">🏆 Top 5 Jogadores</h6>
+	</div>
+	<div class="card-body p-0">
+		{% for player in topPlayers %}
+		<a href="{{ getPlayerLink(player['name'], false) }}" class="top-player-item">
+			<span class="rank">#{{ player['rank'] }}</span>
+			{% if setting('core.online_outfit') and player.outfit is defined %}
+			<img src="{{ player.outfit }}" alt="" class="outfit-img">
+			{% endif %}
+			<div class="player-info">
+				<span class="player-name {% if player['online'] %}text-leaf{% else %}text-danger{% endif %}">
+					{{ player['name'] }}
+				</span>
+				<span class="player-level">Level {{ player['level'] }}</span>
+			</div>
+			<span class="status-indicator {% if player['online'] %}online-dot{% else %}offline-dot{% endif %}"></span>
+		</a>
+		{% endfor %}
+	</div>
+	<div class="card-footer text-center p-1">
+		<a href="{{ getLink('highscores') }}" class="btn btn-outline-leaf btn-sm w-100">Ver Highscores</a>
+	</div>
+</div>

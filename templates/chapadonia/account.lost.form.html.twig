@@ -1,0 +1,21 @@
+<div class="row justify-content-center">
+	<div class="col-md-6">
+		<div class="card rasta-card">
+			<div class="card-header">
+				<h4 class="mb-0">Recuperar Conta</h4>
+			</div>
+			<div class="card-body">
+				<p class="mb-3">Digite seu email para receber instruções de recuperação de conta.</p>
+				<form action="{{ getLink('account/lost') }}" method="post">
+					{{ csrf() }}
+					<div class="mb-3">
+						<label class="form-label text-light fw-bold">Email:</label>
+						<input type="email" name="email" class="form-control" maxlength="255" placeholder="seu@email.com">
+					</div>
+					<button type="submit" class="btn btn-leaf">Enviar</button>
+					<a href="{{ getLink('account/manage') }}" class="btn btn-outline-light ms-2">Voltar</a>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

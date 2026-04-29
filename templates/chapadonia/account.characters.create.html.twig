@@ -1,0 +1,49 @@
+<div class="row justify-content-center">
+	<div class="col-md-6">
+		<div class="card rasta-card">
+			<div class="card-header">
+				<h4 class="mb-0">Criar Personagem</h4>
+			</div>
+			<div class="card-body">
+				{% if errors is not empty %}
+				<div class="alert alert-danger bg-danger bg-opacity-10 border-danger text-light">
+					{% for error in errors %}{{ error }}<br>{% endfor %}
+				</div>
+				{% endif %}
+				<form action="{{ getLink('account/characters/create') }}" method="post">
+					{{ csrf() }}
+					<input type="hidden" name="save" value="1">
+					<div class="mb-3">
+						<label class="form-label text-light fw-bold">Nome do Personagem:</label>
+						<input type="text" name="name" class="form-control" maxlength="30" value="{{ name }}">
+					</div>
+					<div class="mb-3">
+						<label class="form-label text-light fw-bold">Sexo:</label>
+						<select name="sex" class="form-control">
+							<option value="0" {% if sex == 0 %}selected{% endif %}>Feminino</option>
+							<option value="1" {% if sex == 1 %}selected{% endif %}>Masculino</option>
+						</select>
+					</div>
+					<div class="mb-3">
+						<label class="form-label text-light fw-bold">Vocação:</label>
+						<select name="vocation" class="form-control">
+							{% for id, voc in config.vocations %}
+								<option value="{{ id }}" {% if vocation == id %}selected{% endif %}>{{ voc.name }}</option>
+							{% endfor %}
+						</select>
+					</div>
+					<div class="mb-3">
+						<label class="form-label text-light fw-bold">Cidade:</label>
+						<select name="town" class="form-control">
+							{% for id, townName in config.towns %}
+								<option value="{{ id }}" {% if town == id %}selected{% endif %}>{{ townName }}</option>
+							{% endfor %}
+						</select>
+					</div>
+					<button type="submit" class="btn btn-leaf">Criar Personagem</button>
+					<a href="{{ getLink('account/manage') }}" class="btn btn-outline-light ms-2">Voltar</a>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

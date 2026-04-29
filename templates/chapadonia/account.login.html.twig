@@ -1,0 +1,53 @@
+{{ hook('HOOK_ACCOUNT_LOGIN_BEFORE_PAGE') }}
+
+<div class="row justify-content-center">
+	<div class="col-md-6">
+		<div class="card rasta-card">
+			<div class="card-header">
+				<h4 class="mb-0">Entrar na Conta</h4>
+			</div>
+			<div class="card-body">
+				<p class="mb-3">Digite seu {{ account|lower }} e sua senha.<br>
+				<a href="{{ getLink('account/create') }}">Criar uma conta</a> se ainda não tiver uma.</p>
+
+				<form action="{{ getLink('account/manage') }}" method="post">
+					{{ csrf() }}
+					{% if redirect is not null %}
+						<input type="hidden" name="redirect" value="{{ redirect }}" />
+					{% endif %}
+
+					{{ hook('HOOK_ACCOUNT_LOGIN_BEFORE_ACCOUNT') }}
+
+					<div class="mb-3">
+						<label class="form-label text-light fw-bold">{{ account_login_by }}:</label>
+						<input type="text" name="account_login" class="form-control" autofocus
+							maxlength="{{ setting('core.account_login_by_email') ? '255' : '30' }}"
+							placeholder="Digite seu {{ account_login_by|lower }}">
+					</div>
+
+					{{ hook('HOOK_ACCOUNT_LOGIN_AFTER_ACCOUNT') }}
+					{{ hook('HOOK_ACCOUNT_LOGIN_BEFORE_PASSWORD') }}
+
+					<div class="mb-3">
+						<label class="form-label text-light fw-bold">Senha:</label>
+						<input type="password" name="password_login" class="form-control" maxlength="29" placeholder="Digite sua senha">
+					</div>
+
+					{{ hook('HOOK_ACCOUNT_LOGIN_AFTER_PASSWORD') }}
+
+					<div class="mb-3 form-check">
+						<input type="checkbox" id="remember_me" name="remember_me" value="true" class="form-check-input">
+						<label for="remember_me" class="form-check-label text-light">Lembrar de mim</label>
+					</div>
+
+					{{ hook('HOOK_ACCOUNT_LOGIN_AFTER_REMEMBER_ME') }}
+
+					<div class="d-flex gap-2">
+						<button type="submit" class="btn btn-leaf">Entrar</button>
+						<a href="{{ getLink('account/lost') }}" class="btn btn-outline-light">Esqueceu a Senha?</a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,26 @@
+<div class="row justify-content-center">
+	<div class="col-md-6">
+		<div class="card rasta-card">
+			<div class="card-header">
+				<h4 class="mb-0">Deletar Personagem</h4>
+			</div>
+			<div class="card-body">
+				<p class="mb-3">Digite o nome do personagem e sua senha para deletá-lo.</p>
+				<form action="{{ getLink('account/characters/delete') }}" method="post">
+					{{ csrf() }}
+					<input type="hidden" name="deletecharactersave" value="1">
+					<div class="mb-3">
+						<label class="form-label text-light fw-bold">Nome do Personagem:</label>
+						<input type="text" name="delete_name" class="form-control" maxlength="29">
+					</div>
+					<div class="mb-3">
+						<label class="form-label text-light fw-bold">Senha:</label>
+						<input type="password" name="delete_password" class="form-control" maxlength="29">
+					</div>
+					<button type="submit" class="btn btn-danger">Deletar Personagem</button>
+					<a href="{{ getLink('account/manage') }}" class="btn btn-outline-light ms-2">Voltar</a>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

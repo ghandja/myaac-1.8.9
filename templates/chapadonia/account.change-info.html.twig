@@ -1,0 +1,29 @@
+<div class="row justify-content-center">
+	<div class="col-md-6">
+		<div class="card rasta-card">
+			<div class="card-header">
+				<h4 class="mb-0">Alterar Informações</h4>
+			</div>
+			<div class="card-body">
+				<form action="{{ getLink('account/change-info') }}" method="post">
+					{{ csrf() }}
+					<input type="hidden" name="changeinfosave" value="1">
+					<div class="mb-3">
+						<label class="form-label text-light fw-bold">Nome Real:</label>
+						<input type="text" name="info_rlname" class="form-control" maxlength="50" value="{{ account_rlname }}">
+					</div>
+					<div class="mb-3">
+						<label class="form-label text-light fw-bold">Localização:</label>
+						<input type="text" name="info_location" class="form-control" maxlength="50" value="{{ account_location }}">
+					</div>
+					<div class="mb-3">
+						<label class="form-label text-light fw-bold">País:</label>
+						<input type="text" name="info_country" class="form-control" maxlength="50" value="{{ account_country }}">
+					</div>
+					<button type="submit" class="btn btn-leaf">Salvar</button>
+					<a href="{{ getLink('account/manage') }}" class="btn btn-outline-light ms-2">Voltar</a>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

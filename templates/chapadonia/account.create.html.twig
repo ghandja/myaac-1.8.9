@@ -1,0 +1,17 @@
+<div class="row justify-content-center">
+	<div class="col-md-6">
+		<div class="card rasta-card">
+			<div class="card-header">
+				<h4 class="mb-0">Criar Conta</h4>
+			</div>
+			<div class="card-body">
+				<form action="{{ getLink('account/create') }}" method="post">
+					{{ csrf() }}
+					{{ hook('HOOK_ACCOUNT_CREATE_BEFORE_FORM') }}
+					{{ content|raw }}
+					{{ hook('HOOK_ACCOUNT_CREATE_AFTER_FORM') }}
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,183 @@
+{% set menus = {
+	'Criar Personagem': 'account/characters/create',
+	'Deletar Personagem': 'account/characters/delete',
+	'Alterar Informações': 'account/change-info',
+	'Alterar Senha': 'account/change-password',
+	'Alterar Email': 'account/change-email'
+} %}
+
+<div class="row g-3">
+	<div class="col-md-3">
+		<div class="sidebar-left">
+			<div class="menu-category">
+				<button class="menu-cat-btn" type="button">
+					<span>Minha Conta</span>
+				</button>
+				<div class="menu-links" style="display:block;border-radius:0 0 6px 6px;">
+					<a href="{{ getLink('account/manage') }}">Visão Geral</a>
+					{% if recovery_key is empty %}
+						<a href="{{ getLink('account/register') }}">Registrar Conta</a>
+					{% endif %}
+					{% for name, link in menus %}
+						<a href="{{ getLink(link) }}">{{ name }}</a>
+					{% endfor %}
+					{% if setting('core.account_change_character_name') %}
+						<a href="{{ getLink('account/characters/change-name') }}">Alterar Nome</a>
+					{% endif %}
+					{% if setting('core.account_change_character_sex') %}
+						<a href="{{ getLink('account/characters/change-sex') }}">Alterar Sexo</a>
+					{% endif %}
+					<a href="{{ getLink('account/logout') }}" class="text-danger">Sair</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-md-9">
+		<div class="card rasta-card mb-3">
+			<div class="card-header">
+				<h4 class="mb-0">Minha Conta</h4>
+			</div>
+			<div class="card-body">
+				<p class="mb-3">{{ welcome_message|raw }}</p>
+				<p>
+					{% if config.lua.freePremium %}
+						<span class="badge bg-leaf">Premium Ilimitado</span>
+					{% else %}
+						{% set premiumDays = account_logged.getPremDays() %}
+						{% if premiumDays == 0 %}
+							<span class="badge bg-secondary">Sem Premium</span>
+						{% else %}
+							<span class="badge bg-leaf">{{ premiumDays }} dias de Premium restantes</span>
+						{% endif %}
+					{% endif %}
+				</p>
+
+				{% if recovery_key is empty %}
+				<div class="alert alert-warning bg-warning bg-opacity-10 border-warning text-light">
+					Registre sua conta para maior proteção. Clique em "Registrar Conta" e obtenha sua recovery key hoje!
+					<form action="{{ getLink('account/register') }}" method="post" class="mt-2">
+						{{ csrf() }}
+						<button type="submit" class="btn btn-leaf btn-sm">Registrar Conta</button>
+					</form>
+				</div>
+				{% endif %}
+
+				{% if email_request %}
+				<div class="alert alert-info bg-info bg-opacity-10 border-info text-light mb-3">
+					Uma solicitação foi enviada para alterar o email desta conta para <b>{{ email_new }}</b>.<br>
+					Após <b>{{ email_new_time|date("j F Y, G:i:s") }}</b> você poderá aceitar o novo email.
+					<form action="{{ getLink('account/change-email') }}" method="post" class="mt-2">
+						{{ csrf() }}
+						<button type="submit" class="btn btn-outline-leaf btn-sm">Editar</button>
+					</form>
+				</div>
+				{% endif %}
+
+				{{ hook('HOOK_ACCOUNT_MANAGE_BEFORE_GENERAL_INFORMATION') }}
+
+				<h5 class="text-leaf mt-3">Informações Gerais</h5>
+				<table class="table table-borderless mb-3">
+					{% if not config.account_login_by_email or config.account_login_by_email_fallback %}
+					<tr>
+						<td class="LabelV">{% if constant('USE_ACCOUNT_NAME') %}Nome{% else %}Número{% endif %}:</td>
+						<td>{{ account }}</td>
+					</tr>
+					{% endif %}
+					<tr>
+						<td class="LabelV">Email:</td>
+						<td>{{ account_email }} {{ email_change|raw }}</td>
+					</tr>
+					<tr>
+						<td class="LabelV">Criado em:</td>
+						<td>{{ account_created|date("j F Y, G:i:s") }}</td>
+					</tr>
+					<tr>
+						<td class="LabelV">Último Login:</td>
+						<td>{{ account_logged.getCustomField('web_lastlogin')|date("j F Y, G:i:s") }}</td>
+					</tr>
+					<tr>
+						<td class="LabelV">Status:</td>
+						<td>{{ account_status|raw }}</td>
+					</tr>
+					<tr>
+						<td class="LabelV">Registrado:</td>
+						<td>{{ account_registered|raw }}</td>
+					</tr>
+				</table>
+
+				{{ hook('HOOK_ACCOUNT_MANAGE_BEFORE_PUBLIC_INFORMATION') }}
+
+				<h5 class="text-leaf mt-3">Informações Públicas</h5>
+				<table class="table table-borderless mb-3">
+					<tr>
+						<td class="LabelV">Nome Real:</td>
+						<td>{{ account_rlname }}</td>
+					</tr>
+					<tr>
+						<td class="LabelV">Localização:</td>
+						<td>{{ account_location }}</td>
+					</tr>
+				</table>
+				<form action="{{ getLink('account/change-info') }}" method="post">
+					{{ csrf() }}
+					<button type="submit" class="btn btn-outline-leaf btn-sm">Alterar Informações</button>
+				</form>
+
+				{{ hook('HOOK_ACCOUNT_MANAGE_BEFORE_ACCOUNT_LOGS') }}
+				{{ hook('HOOK_ACCOUNT_MANAGE_BEFORE_CHARACTERS') }}
+
+				<h5 class="text-leaf mt-4">Personagens ({{ players|length }})</h5>
+				<div class="table-responsive">
+				<table class="table table-striped">
+					<thead>
+						<tr><th>Nome</th><th>Level</th><th>Vocação</th><th>Cidade</th><th>Último Login</th><th>Status</th><th>Visível</th><th></th></tr>
+					</thead>
+					<tbody>
+					{% for player in players %}
+						<tr>
+							<td>
+								<a href="{{ getLink('characters/' ~ player.getName()|urlencode) }}">{{ player.getName() }}</a>
+								{% if player.isDeleted() %}<span class="text-danger">[DELETADO]</span>{% endif %}
+							</td>
+							<td>{{ player.getLevel() }}</td>
+							<td>{{ player.getVocationName() }}</td>
+							<td>{{ config.towns[player.getTownId()] }}</td>
+							<td>{% if player.getLastLogin() > 0 %}{{ player.getLastLogin|date('d/m/Y H:i') }}{% else %}Nunca{% endif %}</td>
+							<td>{% if player.isOnline() %}<span class="text-leaf">ONLINE</span>{% else %}<span class="text-muted">Offline</span>{% endif %}</td>
+							<td>{% if player.isHidden() %}Oculto{% else %}Visível{% endif %}</td>
+							<td>{% if not player.isDeleted() %}<a href="{{ getLink('account/characters/change-comment?name=' ~ player.getName()|urlencode) }}" class="btn btn-outline-leaf btn-sm">Editar</a>{% endif %}</td>
+						</tr>
+					{% endfor %}
+					</tbody>
+				</table>
+				</div>
+
+				<div class="d-flex gap-2 flex-wrap mt-3">
+					<form action="{{ getLink('account/characters/create') }}" method="post">
+						{{ csrf() }}
+						<button type="submit" class="btn btn-leaf btn-sm">Criar Personagem</button>
+					</form>
+					{% if setting('core.account_change_character_name') %}
+					<form action="{{ getLink('account/characters/change-name') }}" method="post">
+						{{ csrf() }}
+						<button type="submit" class="btn btn-outline-leaf btn-sm">Alterar Nome</button>
+					</form>
+					{% endif %}
+					{% if setting('core.account_change_character_sex') %}
+					<form action="{{ getLink('account/characters/change-sex') }}" method="post">
+						{{ csrf() }}
+						<button type="submit" class="btn btn-outline-leaf btn-sm">Alterar Sexo</button>
+					</form>
+					{% endif %}
+					<form action="{{ getLink('account/characters/delete') }}" method="post">
+						{{ csrf() }}
+						<button type="submit" class="btn btn-outline-danger btn-sm">Deletar Personagem</button>
+					</form>
+				</div>
+
+				{{ hook('HOOK_ACCOUNT_MANAGE_AFTER_CHARACTERS') }}
+			</div>
+		</div>
+	</div>
+</div>

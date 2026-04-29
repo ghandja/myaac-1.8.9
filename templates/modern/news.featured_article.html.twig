@@ -1,0 +1,30 @@
+<div id="FeaturedArticle" class="card border-secondary mb-4">
+	<div class="card-header bg-black border-success border-2">
+		<h5 class="mb-0 text-success"><i class="bi bi-star-fill"></i> Featured Article</h5>
+	</div>
+	<div class="card-body">
+		<div class="row">
+			<div class="col-md-8 order-md-2">
+				<h5 class="text-success">
+					{{ article.title|raw }}
+					{% if canEdit %}
+						{{ include('admin.links.html.twig', {page: 'news', id: article.id, hide: article.hide }) }}
+					{% endif %}
+				</h5>
+				<div class="text-light">
+					{{ article.text|raw }}
+				</div>
+				{% if article.read_more is not empty %}
+				<a href="{{ article.read_more }}" class="btn btn-outline-success btn-sm mt-2">
+					Read more &raquo;
+				</a>
+				{% endif %}
+			</div>
+			<div class="col-md-4 order-md-1 mb-3 mb-md-0">
+				{% if article.read_more is not empty %}<a href="{{ article.read_more }}">{% endif %}
+					<img src="{{ article.image }}" class="img-fluid rounded article-image w-100" alt="">
+				{% if article.read_more is not empty %}</a>{% endif %}
+			</div>
+		</div>
+	</div>
+</div>

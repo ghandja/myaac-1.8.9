@@ -1,0 +1,11 @@
+vendor/
+system/cache/
+system/php_sessions/
+system/logs/
+*.log
+.env
+config.local.php
+key.pem
+images/items/
+images/animated-outfits/outfits_anim/
+images/animated-outfits/libs/

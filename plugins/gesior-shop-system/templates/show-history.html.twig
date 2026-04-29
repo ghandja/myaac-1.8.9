@@ -1,0 +1,69 @@
+<div style="text-align: center"><h1>Histórico de Transações</h1></div>
+
+<h2>Transações de Itens</h2>
+<table class="myaac-table" border=0 cellpadding="1" cellspacing="1" width="100%">
+	<thead>
+	<tr>
+		<td><b>Para:</b></td>
+		<td><b>De:</b></td>
+		<td><b>Nome da Oferta</b></td>
+		<td><b>Comprado em</b></td>
+		<td><b>Recebido no OTS</b></td>
+	</tr>
+	</thead>
+
+	{% for item_received in items_history %}
+		<tr>
+			<td><span style="color: {% if logged_id == item_received['to_account'] %}green{% else %}red{% endif %}">{{ item_received.to_name }}</span></td>
+			<td>
+				{% if logged_id == item_received.from_account  %}
+					<i>Sua conta</i>
+				{% else %}
+					{{ item_received.from_nick }}
+				{% endif %}
+			</td>
+			<td>{{ item_received.item_name.name }}</td>
+			<td>{{ item_received.trans_start|date("j F Y, H:i:s") }}</td>
+			<td>
+				{% if item_received.trans_real and item_received.trans_real > 0 %}
+					{{ item_received.trans_real|date("j F Y, H:i:s") }}
+				{% else %}
+					<span style="color: red">Não realizado ainda.</span>
+				{% endif %}
+			</td>
+		</tr>
+	{% else %}
+		<tr><td colspan="5">Nenhuma transação de item ainda.</td></tr>
+	{% endfor %}
+</table>
+
+<h2>Transações de PACC</h2>
+<table class="myaac-table" border=0 cellpadding="1" cellspacing="1" width="100%">
+	<thead>
+	<tr>
+		<td><b>Para:</b></td>
+		<td><b>De:</b></td>
+		<td><b>Duração</b></td>
+		<td><b>Custo</b></td>
+		<td><b>Adicionado</b></td>
+	</tr>
+	</thead>
+
+	{% for pacc_received in paccs_history %}
+		<tr>
+			<td><span style="color: {% if logged_id == pacc_received['to_account'] %}green{% else %}red{% endif %}">{{ pacc_received.to_name }}</span></td>
+			<td>
+				{% if logged_id == pacc_received.from_account  %}
+					<i>Sua conta</i>
+				{% else %}
+					{{ pacc_received.from_nick }}
+				{% endif %}
+			</td>
+			<td>{{ pacc_received.pacc.days }}</td>
+			<td>{{ pacc_received.price }} Pontos</td>
+			<td>{{ pacc_received.trans_real|date("j F Y, H:i:s") }}</td>
+		</tr>
+	{% else %}
+		<tr><td colspan="5">Nenhuma transação de PACC ainda.</td></tr>
+	{% endfor %}
+</table>

@@ -1,0 +1,11 @@
+<div class="card rasta-card mb-3">
+	<div class="card-header">
+		<h6 class="mb-0">📊 Enquete</h6>
+	</div>
+	<div class="card-body text-center">
+		<p class="small text-light mb-3">{{ poll.question }}</p>
+		<a href="{{ getLink('polls') }}?id={{ poll.id }}" class="btn btn-leaf btn-sm">
+			Votar Agora
+		</a>
+	</div>
+</div>

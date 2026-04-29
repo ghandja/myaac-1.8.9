@@ -1,0 +1,41 @@
+<div id="newsticker" class="card border-secondary mb-4">
+	<div class="card-header bg-black border-success border-2">
+		<h5 class="mb-0 text-success"><i class="bi bi-newspaper"></i> News Ticker</h5>
+	</div>
+	<div class="card-body p-0">
+		{% if i is not defined %}{% set i = 0 %}{% endif %}
+		{% for ticker in tickers %}
+		<div class="ticker-item px-3" onclick="toggleTicker({{ i }})">
+			<div class="d-flex align-items-start gap-2">
+				<div class="ticker-icon flex-shrink-0" style="width:16px;height:16px;background:url({{ constant('BASE_URL') }}images/news/icon_{{ ticker.icon }}_small.gif) no-repeat;"></div>
+				<span class="ticker-date flex-shrink-0 pt-1">{{ ticker.date|date("d M Y") }}</span>
+				<div class="flex-grow-1">
+					<div class="ticker-short">{{ ticker.body_short|raw }}</div>
+					<div id="ticker-full-{{ i }}" class="ticker-full">
+						{{ ticker.body|raw }}
+						{% if canEdit %}
+							{{ include('admin.links.html.twig', {page: 'news', id: ticker.id, hide: ticker.hide }) }}
+						{% endif %}
+					</div>
+				</div>
+				<i id="ticker-icon-{{ i }}" class="bi bi-plus-circle text-success flex-shrink-0 mt-1"></i>
+			</div>
+		</div>
+		{% set i = i + 1 %}
+		{% endfor %}
+	</div>
+</div>
+
+<script>
+function toggleTicker(i) {
+	var full = document.getElementById('ticker-full-' + i);
+	var icon = document.getElementById('ticker-icon-' + i);
+	if (full.classList.contains('show')) {
+		full.classList.remove('show');
+		icon.className = 'bi bi-plus-circle text-success flex-shrink-0 mt-1';
+	} else {
+		full.classList.add('show');
+		icon.className = 'bi bi-dash-circle text-success flex-shrink-0 mt-1';
+	}
+}
+</script>

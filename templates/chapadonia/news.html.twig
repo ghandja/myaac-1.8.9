@@ -1,0 +1,19 @@
+<div id="News" class="mb-4">
+	<div class="news-headline d-flex align-items-center gap-2">
+		<img src="{{ constant('BASE_URL') }}images/news/icon_{{ icon }}.gif" width="16" height="16" alt="" class="flex-shrink-0">
+		<h5 class="flex-grow-1 mb-0">{{ title }}</h5>
+		{% if setting('core.news_author') and author is not empty %}
+		<span class="news-date">por {{ author }}</span>
+		{% endif %}
+		<span class="news-date">{{ date|date(setting('core.news_date_format')) }}</span>
+	</div>
+	<div>
+		{{ content|raw }}
+	</div>
+	{% if comments is not null %}
+	<div class="text-end mt-2">
+		<a href="{{ comments }}" class="btn btn-outline-leaf btn-sm">&raquo; Comentar esta notícia</a>
+	</div>
+	{% endif %}
+	<hr class="border-secondary opacity-25 mt-3">
+</div>

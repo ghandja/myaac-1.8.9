@@ -1,6 +1,6 @@
 {% set onlineTTL = setting('core.online_cache_ttl') %}
 {% if onlineTTL > 0 and cache.enabled() %}
-<small>*Note: Online List is updated every {{ onlineTTL > 1 ? ' ' ~ onlineTTL : '' }} minute{{ onlineTTL > 1 ? 's' : '' }}.</small>
+<small>*Nota: Lista Online é atualizada a cada {{ onlineTTL > 1 ? ' ' ~ onlineTTL : '' }} minuto{{ onlineTTL > 1 ? 's' : '' }}.</small>
 <br/>
 {% endif %}
 
@@ -9,7 +9,7 @@
 {# vocation statistics #}
 {% if setting('core.online_vocations') %}
 
-	{% set title = 'Vocation statistics' %}
+	{% set title = 'Estatísticas de Vocação' %}
 	{% set tableClass = 'Table3' %}
 	{% set background = config('darkborder') %}
 	{% set content %}
@@ -65,8 +65,8 @@
 	<tr>
 		<td align="center">
 			<img src="images/white_skull.gif"/> - 1 - 6 Frags<br/>
-			<img src="images/red_skull.gif"/> - 6+ Frags or Red Skull<br/>
-			<img src="images/black_skull.gif"/> - 10+ Frags or Black Skull
+			<img src="images/red_skull.gif"/> - 6+ Frags ou Red Skull<br/>
+			<img src="images/black_skull.gif"/> - 10+ Frags ou Black Skull
 		</td>
 	</tr>
 </table>
@@ -74,7 +74,7 @@
 
 <br/>
 
-{% set title = 'World Information' %}
+{% set title = 'Informações do Mundo' %}
 {% set tableClass = 'Table3' %}
 {% set background = config('darkborder') %}
 {% set content %}
@@ -84,7 +84,7 @@
 		<td>{% if not status.online %}Offline{% else %}Online{% endif %}</td>
 	</tr>
 	<tr>
-		<td class="LabelV150"><b>Players Online:</b></td>
+		<td class="LabelV150"><b>Jogadores Online:</b></td>
 		<td>
 			{% if setting('core.online_afk') %}
 				{% set players_count = players|length %}
@@ -93,8 +93,8 @@
 					{% set players_count = players_count + afk|abs %}
 					{% set afk = 0 %}
 				{% endif %}
-				Currently there are <b>{{ status.players }}</b> active and <b>{{ afk }}</b> AFK players.<br/>
-				Total number of players: <b>{{ players_count }}</b>.<br/>
+				Atualmente há <b>{{ status.players }}</b> jogadores ativos e <b>{{ afk }}</b> AFK.<br/>
+				Número total de jogadores: <b>{{ players_count }}</b>.<br/>
 			{% else %}
 				{{ players|length }}
 			{% endif %}
@@ -103,19 +103,17 @@
 
 	{% if setting('core.online_record') and record|length > 0 %}
 	<tr>
-		<td class="LabelV150"><b>Online Record:</b></td>
-		<td>
-			{{ record }}
-		</td>
+		<td class="LabelV150"><b>Recorde Online:</b></td>
+		<td>{{ record }}</td>
 	</tr>
 	{% endif %}
 
 	<tr>
-		<td class="LabelV150"><b>Location Datacenter:</b></td>
-		<td>{{ setting('core.online_datacenter')|raw }} <small>(Server date & time: - {{ "now"|date("d/m/Y H:i:s") }})</small></td>
+		<td class="LabelV150"><b>Datacenter:</b></td>
+		<td>{{ setting('core.online_datacenter')|raw }} <small>(Data e hora do servidor: {{ "now"|date("d/m/Y H:i:s") }})</small></td>
 	</tr>
 	<tr>
-		<td class="LabelV150"><b>PvP Type:</b></td>
+		<td class="LabelV150"><b>Tipo de PvP:</b></td>
 		<td>
 			{% set worldType = config('lua')['worldType']|lower %}
 			{% if worldType in ['pvp','2','normal','open','openpvp'] %}
@@ -133,7 +131,7 @@
 <br/>
 <br/>
 
-{% set title = 'Players Online' %}
+{% set title = 'Jogadores Online' %}
 {% set tableClass = 'Table2' %}
 {% set content %}
 <table width="100%" class="myaac-table">
@@ -146,15 +144,15 @@
 		{% if setting('core.online_outfit') %}
 			<td style="width: 32px;"><b>Outfit</b></td>
 		{% endif %}
-		<td style="text-align:left;">Name&#160;&#160;
-			<small style="font-weight:normal">[<a href="{{ getLink('online')}}?order=name_{{ order == 'name_asc' ? 'desc' : 'asc' }}">sort</a>]</small>
+		<td style="text-align:left;">Nome&#160;&#160;
+			<small style="font-weight:normal">[<a href="{{ getLink('online')}}?order=name_{{ order == 'name_asc' ? 'desc' : 'asc' }}">ordenar</a>]</small>
 			<img class="sortarrow" src="images/{{ order == 'name_asc' ? 'order_desc' : (order == 'name_desc' ? 'order_asc' : 'news/blank') }}.gif"/></td>
 		<td style="text-align:left;width:10%">Level&#160;&#160;
-			<small style="font-weight:normal">[<a href="{{ getLink('online')}}?order=level_{{ order == 'level_asc' ? 'desc' : 'asc' }}">sort</a>]</small>
+			<small style="font-weight:normal">[<a href="{{ getLink('online')}}?order=level_{{ order == 'level_asc' ? 'desc' : 'asc' }}">ordenar</a>]</small>
 			<img class="sortarrow" src="images/{{ order == 'level_asc' ? 'order_desc' : (order == 'level_desc' ? 'order_asc' : 'news/blank') }}.gif"/>
 		</td>
-		<td style="text-align:left;width:20%">Vocation&#160;&#160;
-			<small style="font-weight:normal">[<a href="{{ getLink('online')}}?order=vocation_{{ order == 'vocation_asc' ? 'desc' : 'asc' }}">sort</a>]</small>
+		<td style="text-align:left;width:20%">Vocação&#160;&#160;
+			<small style="font-weight:normal">[<a href="{{ getLink('online')}}?order=vocation_{{ order == 'vocation_asc' ? 'desc' : 'asc' }}">ordenar</a>]</small>
 			<img class="sortarrow" src="images/{{ order == 'vocation_asc' ? 'order_desc' : (order == 'vocation_desc' ? 'order_asc' : 'news/blank') }}.gif"/>
 		</td>
 	</tr>

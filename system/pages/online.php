@@ -14,7 +14,7 @@ use MyAAC\Models\ServerConfig;
 use MyAAC\Models\ServerRecord;
 
 defined('MYAAC') or die('Direct access not allowed!');
-$title = 'Who is online?';
+$title = 'Quem está online?';
 
 if (setting('core.account_country')) {
 	require SYSTEM . 'countries.conf.php';

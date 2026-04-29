@@ -10,7 +10,7 @@
  * @link      https://my-aac.org
  */
 defined('MYAAC') or die('Direct access not allowed!');
-$title = 'Server info';
+$title = 'Informações do Servidor';
 
 if(isset($config['lua']['experience_stages']))
     $config['lua']['experienceStages'] = $config['lua']['experience_stages'];

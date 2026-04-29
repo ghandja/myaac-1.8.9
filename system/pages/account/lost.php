@@ -9,11 +9,11 @@
  * @link      https://my-aac.org
  */
 defined('MYAAC') or die('Direct access not allowed!');
-$title = 'Lost Account Interface';
+$title = 'Recuperar Conta';
 
 if(!setting('core.mail_enabled'))
 {
-	echo '<b>Account maker is not configured to send e-mails, you can\'t use Lost Account Interface. Contact with admin to get help.</b>';
+	echo '<b>O sistema de email não está configurado. Entre em contato com o administrador para obter ajuda.</b>';
 	return;
 }
 

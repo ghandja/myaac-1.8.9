@@ -1,0 +1,36 @@
+<div class="row">
+	<div class="col-12">
+		<div class="card rasta-card mb-3">
+			<div class="card-header">
+				<h4 class="mb-0">Comandos dos Jogadores</h4>
+			</div>
+			<div class="card-body">
+				<p class="mb-3">Digite o comando no chat do jogo para usá-lo. Exemplo: <span class="badge bg-leaf">!online</span></p>
+				
+				{% for category, cmds in commands %}
+				<div class="mb-4">
+					<h5 class="text-leaf mb-2">{{ category }}</h5>
+					<div class="table-responsive">
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th style="width:30%">Comando</th>
+								<th>Descrição</th>
+							</tr>
+						</thead>
+						<tbody>
+						{% for cmd, desc in cmds %}
+							<tr>
+								<td><span class="badge bg-leaf">{{ cmd }}</span></td>
+								<td>{{ desc }}</td>
+							</tr>
+						{% endfor %}
+						</tbody>
+					</table>
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,36 +1,39 @@
-<div style="text-align:center">
-    <h1>{{ config.lua.serverName }}</h1>
-    <h3>
-        {%  if experienceStages %}
-        Experience stages: {{ experienceStages }}<br>
-        {%  endif %}
-        Commands: <a href="{{ getLink('commands') }}">Look here</a><br>
-        Team: <a href="{{ getLink('team') }}">Look here</a><br>
-    </h3>
+<div class="card rasta-card mb-4">
+    <div class="card-body text-center py-4">
+        <h1 class="text-leaf mb-3" style="font-size:2rem;">{{ config.lua.serverName }}</h1>
+        <div class="d-flex justify-content-center gap-4">
+            <a href="{{ getLink('commands') }}" class="btn btn-outline-leaf btn-sm">
+                <i class="bi bi-terminal"></i> Comandos
+            </a>
+            <a href="{{ getLink('team') }}" class="btn btn-outline-leaf btn-sm">
+                <i class="bi bi-people"></i> Equipe
+            </a>
+        </div>
+    </div>
 </div>
 
 <ul>
-    <h2>Server Info:</h2>
-    <li>IP: <b>{{ serverIp }}</b> (Port: <b>{{ config.lua.loginPort }}</b>)</li>
+    <h2>Informações do Servidor:</h2>
+    <li>IP: <b>{{ serverIp }}</b> (Porta: <b>{{ config.lua.loginPort }}</b>)</li>
     {%  if clientVersion %}
     <li>Client: <b>{{ clientVersion }}</b></li>
     {%  endif %}
     <li>Online: <b>24/7</b></li>
     {%  if globalSaveHour %}
-    <li>Global save: <b>{{ globalSaveHour }}:00</b></li>
+    <li>Salvamento Global: <b>{{ globalSaveHour }}:00</b></li>
     {%  endif %}
-    <li>World type: <b>{{ config.lua.worldType|upper }} <i>(Protection level: {{ protectionLevel }})</i></b></li>
-    <li>House rent: {{ houseRent }}.</li><br>
+    <li>Tipo de Mundo: <b>{{ config.lua.worldType|upper }} <i>(Nível de proteção: {{ protectionLevel }})</i></b></li>
+    <li>Aluguel de Casa: {{ houseRent }}.</li><br>
     {%  if houseOld %}
-    <li>Houses with inactive owners are cleaned after 30 days.</li>
+    <li>Casas com donos inativos são limpas após 30 dias.</li>
     {%  endif %}
 
     <h2>Rates</h2>
     {%  if rateExp is defined %}
-    <li>Exp Rate: <b>x{{ rateExp }}</b></li>
+    <li>Exp: <b>x{{ rateExp }}</b></li>
     {%  endif %}
     {%  if rateExpFromPlayers %}
-        <li>Exp Rate from Players: <b>x{{ rateExpFromPlayers }}</b></li>
+        <li>Exp de Jogadores: <b>x{{ rateExpFromPlayers }}</b></li>
     {%  endif %}
     {%  if rateMagic is defined %}
     <li>Magic Level: <b>x{{ rateMagic }}</b></li>
@@ -45,58 +48,58 @@
     <li>Spawn: <b>x{{ rateSpawn }}</b></li>
     {%  endif %}
     {%  if houseLevel %}
-    <li>Houses: <b>{{ houseLevel }} level</b></li>
+    <li>Casas: <b>Level {{ houseLevel }}</b></li>
     {%  endif %}
-    <li>Guilds: <b>{{ setting('core.guild_need_level') }} level</b> (Create via website)</li>
+    <li>Guilds: <b>Level {{ setting('core.guild_need_level') }}</b> (Criar pelo site)</li>
     <br>
 
-    <h2>Frags & Skull system</h2>
+    <h2>Sistema de Frags & Skull</h2>
     <li>PZ Lock: <b>{{ pzLocked / (60 * 1000) }} min</b></li>
     {%  if whiteSkullTime %}
-    <li>White Skull Time: <b>{{ whiteSkullTime }} min</b></li>
+    <li>Tempo de White Skull: <b>{{ whiteSkullTime }} min</b></li>
     {%  endif %}
-    <li>Red skull length: <b>{{ redSkullLength / (24 * 60 * 60) }} days</b></li>
+    <li>Duração Red Skull: <b>{{ redSkullLength / (24 * 60 * 60) }} dias</b></li>
     {% if blackSkull %}
-    <li>Black skull length: <b>{{ blackSkullLength / (24 * 60 * 60) }} days</b></li>
+    <li>Duração Black Skull: <b>{{ blackSkullLength / (24 * 60 * 60) }} dias</b></li>
     {%  endif %}
 	{% if killsToRedSkull is defined %}
-    <li>Kills to red skull: <b>{{ config.lua.killsToRedSkull }}</b></li>
+    <li>Kills para Red Skull: <b>{{ config.lua.killsToRedSkull }}</b></li>
     {%  elseif config.lua.dailyFragsToRedSkull is defined or config.lua.kills_per_day_red_skull is defined %}
     <li>
-        <h3>Red skull</h3>
+        <h3>Red Skull</h3>
         <ul>
-            <li>{{ dailyFragsToRedSkull }} frags daily</li>
-            <li>{{ weeklyFragsToRedSkull }} frags weekly</li>
-            <li>{{ monthlyFragsToRedSkull }} frags monthly</li>
+            <li>{{ dailyFragsToRedSkull }} frags por dia</li>
+            <li>{{ weeklyFragsToRedSkull }} frags por semana</li>
+            <li>{{ monthlyFragsToRedSkull }} frags por mês</li>
         </ul>
         {% if blackSkull and config.lua.dailyFragsToBlackSkull is defined or config.lua.kills_per_day_black_skull is defined %}
-        <h3>Black skull</h3>
+        <h3>Black Skull</h3>
         <ul>
-            <li>{{ dailyFragsToBlackSkull }} frags daily</li>
-            <li>{{ weeklyFragsToBlackSkull }} frags weekly</li>
-            <li>{{ monthlyFragsToBlackSkull }} frags monthly</li>
+            <li>{{ dailyFragsToBlackSkull }} frags por dia</li>
+            <li>{{ weeklyFragsToBlackSkull }} frags por semana</li>
+            <li>{{ monthlyFragsToBlackSkull }} frags por mês</li>
         </ul>
         {% elseif config.lua.dailyFragsToBanishment is defined %}
-        <h3>Banishment</h3>
+        <h3>Banimento</h3>
         <ul>
-            <li>{{ config.lua.dailyFragsToBanishment }} frags daily</li>
-            <li>{{ config.lua.weeklyFragsToBanishment }} frags weekly</li>
-            <li>{{ config.lua.monthlyFragsToBanishment }} frags monthly</li>
+            <li>{{ config.lua.dailyFragsToBanishment }} frags por dia</li>
+            <li>{{ config.lua.weeklyFragsToBanishment }} frags por semana</li>
+            <li>{{ config.lua.monthlyFragsToBanishment }} frags por mês</li>
         </ul>
         {% endif %}
     </li>
     {% endif %}
     {% if banishmentLength %}
-    <li>Banishment length: <b>{{ banishmentLength }} days</b></li>
+    <li>Duração do Banimento: <b>{{ banishmentLength }} dias</b></li>
     {% endif %}
 	{% if finalBanishmentLength %}
-    <li>Final banishment length: <b>{{ finalBanishmentLength }} days</b></li>
+    <li>Duração do Banimento Final: <b>{{ finalBanishmentLength }} dias</b></li>
     {% endif %}
 	{% if ipBanishmentLength %}
-    <li>IP banishment length: <b>{{ ipBanishmentLength }} days</b></li>
+    <li>Duração do Banimento de IP: <b>{{ ipBanishmentLength }} dias</b></li>
     {% endif %}
     <br>
-    <h2>Other</h2>
-    <li>Respect our <a href="{{ getLink('rules') }}">rules</a>.</li>
-    <li>Please report rule violations (Botters, players breaking rules etc) with <b>CTRL + R</b>.</li>
+    <h2>Outros</h2>
+    <li>Respeite nossas <a href="{{ getLink('rules') }}">regras</a>.</li>
+    <li>Reporte violações de regras com <b>CTRL + R</b>.</li>
 </ul>

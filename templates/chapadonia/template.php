@@ -49,9 +49,9 @@ function logo_monster() {
 	<div class="status-bar">
 		<div class="container-fluid">
 			<div class="d-flex justify-content-center gap-3 gap-md-5 small flex-wrap">
-				<span><img src="images/items/2991.gif" width="20" height="20" class="status-icon" onerror="this.style.display='none'"> <strong><?php echo $status['players']; ?> / <?php echo $status['playersMax']; ?></strong> Jogadores</span>
-				<span><img src="images/items/3114.gif" width="20" height="20" class="status-icon" onerror="this.style.display='none'"> <strong><?php echo $status['monsters']; ?></strong> Monstros</span>
-				<span><img src="images/items/9660.gif" width="20" height="20" class="status-icon" onerror="this.style.display='none'"> <strong><?php echo $status['uptimeReadable'] ?? 'Desconhecido'; ?></strong> Uptime</span>
+				<span><img src="images/items/2991.gif" width="36" height="36" class="status-icon" onerror="this.style.display='none'"> <strong><?php echo $status['players']; ?> / <?php echo $status['playersMax']; ?></strong> Jogadores</span>
+				<span><img src="images/items/2675.gif" width="36" height="36" class="status-icon" onerror="this.style.display='none'"> <strong><?php echo $status['monsters']; ?></strong> Monstros</span>
+				<span><img src="images/items/9660.gif" width="36" height="36" class="status-icon" onerror="this.style.display='none'"> <strong><?php echo $status['uptimeReadable'] ?? 'Desconhecido'; ?></strong> Uptime</span>
 			</div>
 		</div>
 	</div>
@@ -71,7 +71,7 @@ function logo_monster() {
 						'community' => 3063,  // ring
 						'forum' => 2822,      // book
 						'library' => 3059,    // spellbook
-						'shops' => 3043,      // crystal coin
+						'shops' => 24875,     // dragon chest
 					];
 					foreach ($config['menu_categories'] as $id => $cat):
 						if (!isset($menus[$id])) continue;
@@ -79,7 +79,7 @@ function logo_monster() {
 					<div class="menu-category">
 						<button class="menu-cat-btn <?php echo $first ? '' : 'collapsed'; ?>" type="button" data-bs-toggle="collapse" data-bs-target="#menu-<?php echo $cat['id']; ?>">
 							<?php if (isset($catIcons[$cat['id']])): ?>
-							<img src="images/items/<?php echo $catIcons[$cat['id']]; ?>.gif" width="18" height="18" class="menu-icon" onerror="this.style.display='none'">
+							<img src="images/items/<?php echo $catIcons[$cat['id']]; ?>.gif" width="36" height="36" class="menu-icon" onerror="this.style.display='none'">
 							<?php endif; ?>
 							<span><?php echo $cat['name']; ?></span>
 							<i class="bi bi-chevron-down ms-auto"></i>
@@ -118,22 +118,6 @@ function logo_monster() {
 			<!-- ===== RIGHT SIDEBAR: BOSS + PLAYERS ===== -->
 			<aside class="col-lg-3 col-md-4 order-3">
 				<div class="sidebar-right">
-					<!-- Criatura Boostada -->
-					<div class="card rasta-card mb-3">
-						<div class="card-body text-center p-2">
-							<div class="text-white fw-bold mb-2" style="font-size:0.85rem;letter-spacing:0.5px;">Criatura Boostada</div>
-							<a href="<?php echo getLink('monsters'); ?>">
-								<img src="images/monsters/<?php echo logo_monster(); ?>.gif"
-								     alt="<?php echo $config['logo_monster'] ?? 'Monster'; ?>"
-								     class="img-fluid boss-img"
-								     onerror="this.src='images/monsters/dragon.gif'">
-							</a>
-							<div class="mt-1 text-leaf fw-bold small">
-								<?php echo $config['logo_monster'] ?? 'Dragon'; ?>
-							</div>
-						</div>
-					</div>
-
 					<!-- Caixas Dinâmicas (Highscores, Poll, Gallery) -->
 					<?php
 					if(isset($config['boxes'])) {

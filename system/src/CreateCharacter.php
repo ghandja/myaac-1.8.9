@@ -252,10 +252,10 @@ class CreateCharacter
 
 		global $twig;
 		$twig->display('success.html.twig', array(
-			'title' => 'Character Created',
-			'description' => 'The character <b>' . $name . '</b> has been created.<br/>
-					Please select the outfit when you log in for the first time.<br/><br/>
-					<b>See you on ' . configLua('serverName') . '!</b>'
+			'title' => 'Personagem Criado',
+			'description' => 'O personagem <b>' . $name . '</b> foi criado.<br/>
+					Selecione o outfit quando fizer login pela primeira vez.<br/><br/>
+					<b>Nos vemos no ' . configLua('serverName') . '!</b>'
 		));
 
 		$account->logAction('Personagem criado: <b>' . $name . '</b>.');

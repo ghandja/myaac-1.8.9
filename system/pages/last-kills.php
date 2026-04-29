@@ -9,7 +9,7 @@
  * @link      https://my-aac.org
  */
 defined('MYAAC') or die('Direct access not allowed!');
-$title = 'Últimos Kills';
+$title = 'Últimas Kills';
 
 $last_kills = array();
 $players_deaths_count = 0;
@@ -38,36 +38,36 @@ else {
 					if($killer['player_name'] != "") {
 						if($i == 1) {
 							if($count <= 4)
-								$killers_string .= 'killed';
+								$killers_string .= 'matou';
 							else if($count < 10)
-								$killers_string .= 'slain';
+								$killers_string .= 'trucidou';
 							else if($count < 15)
-								$killers_string .= 'crushed';
+								$killers_string .= 'esmagou';
 							else if($count < 20)
-								$killers_string .= 'eliminated';
+								$killers_string .= 'eliminou';
 							else
-								$killers_string .= 'annihilated';
-							$killers_string .= ' at level <b>' . $death['level'] . '</b> ';
+								$killers_string .= 'aniquilou';
+							$killers_string .= ' no level <b>' . $death['level'] . '</b> ';
 						} else if($i == $count)
 							$killers_string .= ' and';
 						else
 							$killers_string .= ',';
 
-						$killers_string .= ' by ';
+						$killers_string .= ' por ';
 						if($killer['monster_name'] != '')
-							$killers_string .= $killer['monster_name'] . ' summoned by ';
+							$killers_string .= $killer['monster_name'] . ' invocado por ';
 
 						if($killer['player_exists'] == 0)
 							$killers_string .= getPlayerLink($killer['player_name']);
 					} else {
 						if($i == 1)
-							$killers_string .= 'died at level <b>' . $death['level'] . '</b>';
+							$killers_string .= ' morreu no level <b>' . $death['level'] . '</b>';
 						else if($i == $count)
-							$killers_string .= ' and';
+							$killers_string .= ' e';
 						else
 							$killers_string .= ',';
 
-						$killers_string .= ' by ' . $killer['monster_name'];
+						$killers_string .= ' por ' . $killer['monster_name'];
 					}
 				}
 
@@ -90,7 +90,7 @@ else {
 				$players_deaths_count++;
 				$killers_string = '';
 
-				$killers_string .= getPlayerLink($death['victim']) . ' died at level <strong>' . $death['level'] . '</strong> by ';
+				$killers_string .= getPlayerLink($death['victim']) . ' morreu no level <strong>' . $death['level'] . '</strong> por ';
 				if($death['is_player'] == '1')
 					$killers_string .= getPlayerLink($death['killed_by']);
 				else

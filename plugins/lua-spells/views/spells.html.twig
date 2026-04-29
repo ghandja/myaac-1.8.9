@@ -3,9 +3,9 @@
 <script>
 
 	$(function () {
-		$("#tb_instantSpells").DataTable();
-		$("#tb_conjureSpells").DataTable();
-		$("#tb_runeSpells").DataTable();
+		$("#tb_instantSpells").DataTable({ language: { url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/pt-BR.json' } });
+		$("#tb_conjureSpells").DataTable({ language: { url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/pt-BR.json' } });
+		$("#tb_runeSpells").DataTable({ language: { url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/pt-BR.json' } });
 	});
 
 </script>
@@ -49,14 +49,14 @@
 <form action="{{ getLink('spells') }}" method="post">
 	<table border="0" cellspacing="1" cellpadding="4" width="100%">
 		<tr bgcolor="{{ config.vdarkborder }}">
-			<td class="white"><b>Spell Search</b></td>
+			<td class="white"><b>Busca de Magias</b></td>
 		</tr>
 		<tr bgcolor="{{ config.darkborder }}">
 			<td>
 				<table border="0" cellpadding="1">
 					<tr>
-						<td>Only for vocation: <select name="vocation_id">
-								<option value="all" {% if post_vocation_id == 'all' %} selected{% endif %}>All</option>
+						<td>Apenas para vocação: <select name="vocation_id">
+								<option value="all" {% if post_vocation_id == 'all' %} selected{% endif %}>Todas</option>
 								{% for id, vocation in config.vocations %}
 									<option value="{{ id }}"{% if id == post_vocation_id and post_vocation_id != "all" and post_vocation_id != '' %} selected{% endif %}>{{ vocation }}</option>
 								{% endfor %}
@@ -75,7 +75,7 @@
 
 <div class="ts_Spells">
 	<input type="radio" name="ts_Spells" id="tab_instant" aria-controls="instant" checked>
-	<label for="tab_instant" class="white">Instant</label>
+	<label for="tab_instant" class="white">Instantâneo</label>
 
 	<input type="radio" name="ts_Spells" id="tab_conjure" aria-controls="conjure">
 	<label for="tab_conjure" class="white">Conjure</label>
@@ -88,8 +88,8 @@
 			<table id="tb_instantSpells">
 				<thead>
 				<tr>
-					<th>Name</th>
-					<th>Words</th>
+					<th>Nome</th>
+					<th>Palavras</th>
 					<th>Prem</th>
 
 					{% if showColumns.level %}
@@ -102,7 +102,7 @@
 					<th>Group</th>
 					{% endif %}
 
-					<th>Vocations</th>
+					<th>Vocações</th>
 				</tr>
 				</thead>
 				<tbody>
@@ -144,8 +144,8 @@
 			<table id="tb_conjureSpells">
 				<thead>
 				<tr>
-					<th>Name</th>
-					<th>Words</th>
+					<th>Nome</th>
+					<th>Palavras</th>
 					<th>Prem</th>
 
 					{% if showColumns.level %}
@@ -156,7 +156,7 @@
 					<th>Soul</th>
 					<th>Item</th>
 					<th>Reagent</th>
-					<th>Vocations</th>
+					<th>Vocações</th>
 				</tr>
 				</thead>
 				<tbody>
@@ -206,14 +206,14 @@
 			<table id="tb_runeSpells">
 				<thead>
 				<tr>
-					<th>Name</th>
+					<th>Nome</th>
 					<th>Lvl</th>
 					<th>Mag Lvl</th>
 					<th>Item</th>
 					{% if showColumns.group %}
 					<th>Group</th>
 					{% endif %}
-					<th>Vocations</th>
+					<th>Vocações</th>
 				</tr>
 				</thead>
 				<tbody>

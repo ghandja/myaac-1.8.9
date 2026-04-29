@@ -12,7 +12,7 @@
 use MyAAC\Models\Spell;
 
 defined('MYAAC') or die('Direct access not allowed!');
-$title = 'Spells';
+$title = 'Magias';
 
 if(isset($_REQUEST['vocation_id'])) {
 	$vocation_id = $_REQUEST['vocation_id'];
@@ -77,9 +77,26 @@ $twig->display('spells.html.twig', array(
 
 <script>
 	$(document).ready( function () {
-		$("#tb_instantSpells").DataTable();
-		$("#tb_conjureSpells").DataTable();
-		$("#tb_runeSpells").DataTable();
+		var langPt = {
+			"sEmptyTable": "Nenhum registro encontrado",
+			"sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+			"sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
+			"sInfoFiltered": "(Filtrados de _MAX_ registros)",
+			"sLengthMenu": "Mostrar _MENU_",
+			"sLoadingRecords": "Carregando...",
+			"sProcessing": "Processando...",
+			"sSearch": "Buscar:",
+			"sZeroRecords": "Nenhum resultado encontrado",
+			"oPaginate": {
+				"sFirst": "Primeiro",
+				"sLast": "Último",
+				"sNext": "Próximo",
+				"sPrevious": "Anterior"
+			}
+		};
+		$("#tb_instantSpells").DataTable({ language: langPt });
+		$("#tb_conjureSpells").DataTable({ language: langPt });
+		$("#tb_runeSpells").DataTable({ language: langPt });
 	} );
 
 </script>

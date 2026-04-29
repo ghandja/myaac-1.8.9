@@ -13,14 +13,14 @@ use MyAAC\CreateCharacter;
 use MyAAC\Models\AccountEmailVerify;
 
 defined('MYAAC') or die('Direct access not allowed!');
-$title = 'Create Account';
+$title = 'Criar Conta';
 
 if (setting('core.account_country'))
 	require SYSTEM . 'countries.conf.php';
 
 if($logged)
 {
-	echo 'Please logout before attempting to create a new account.';
+	echo 'Faça logout antes de criar uma nova conta.';
 	return;
 }
 
@@ -84,10 +84,10 @@ if($save)
 
 	// password
 	if(empty($password)) {
-		$errors['password'] = 'Please enter the password for your new account.';
+		$errors['password'] = 'Digite a senha para sua nova conta.';
 	}
 	elseif($password != $password_confirm) {
-		$errors['password'] = 'Passwords are not the same.';
+		$errors['password'] = 'As senhas não coincidem.';
 	}
 	else if(!Validator::password($password)) {
 		$errors['password'] = Validator::getLastError();
@@ -95,7 +95,7 @@ if($save)
 
 	// check if account name is not equal to password
 	if(!config('account_login_by_email') && USE_ACCOUNT_NAME && strtoupper($account_name) == strtoupper($password)) {
-		$errors['password'] = 'Password may not be the same as account name.';
+		$errors['password'] = 'A senha não pode ser igual ao nome da conta.';
 	}
 
 	if(setting('core.account_mail_unique'))
@@ -103,7 +103,7 @@ if($save)
 		$test_email_account = new OTS_Account();
 		$test_email_account->findByEMail($email);
 		if($test_email_account->isLoaded())
-			$errors['email'] = 'Account with this e-mail address already exist.';
+			$errors['email'] = 'Já existe uma conta com este email.';
 	}
 
 	$account_db = new OTS_Account();

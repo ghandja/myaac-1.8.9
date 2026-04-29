@@ -10,7 +10,7 @@
  * @link      https://my-aac.org
  */
 defined('MYAAC') or die('Direct access not allowed!');
-$title = 'Houses';
+$title = 'Casas';
 
 $errors = array();
 if(!$db->hasColumn('houses', 'name')) {

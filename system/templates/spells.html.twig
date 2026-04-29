@@ -34,14 +34,14 @@
 <form action="{{ getLink('spells') }}" method="post">
 	<table border="0" cellspacing="1" cellpadding="4" width="100%">
 		<tr bgcolor="{{ config.vdarkborder }}">
-			<td class="white"><b>Spell Search</b></td>
+			<td class="white"><b>Busca de Magias</b></td>
 		</tr>
 		<tr bgcolor="{{ config.darkborder }}">
 			<td>
 				<table border="0" cellpadding="1">
 					<tr>
-						<td>Only for vocation: <select name="vocation_id">
-								<option value="all" {% if post_vocation_id == 'all' %} selected{% endif %}>All</option>
+						<td>Apenas para vocação: <select name="vocation_id">
+								<option value="all" {% if post_vocation_id == 'all' %} selected{% endif %}>Todas</option>
 								{% for id, vocation in config.vocations %}
 									<option value="{{ id }}"{% if id == post_vocation_id and post_vocation_id != "all" and post_vocation_id != '' %} selected{% endif %}>{{ vocation }}</option>
 								{% endfor %}
@@ -72,11 +72,11 @@
 		<section id="instant" class="tab-panel">
 			<table id="tb_instantSpells">
 				<thead>
-				<th>Name</th>
-				<th>Words</th>
-				<th>Level</th>
+<th>Nome</th>
+				<th>Palavras</th>
+				<th>Prem</th>
 				<th>Mana</th>
-				<th>Vocations</th>
+				<th>Vocações</th>
 				</thead>
 				<tbody>
 				{% set i = 0 %}
@@ -106,14 +106,14 @@
 		<section id="conjure" class="tab-panel">
 			<table id="tb_conjureSpells">
 				<thead>
-				<th>Name</th>
-				<th>Words</th>
+				<th>Nome</th>
+				<th>Palavras</th>
 				<th>Level</th>
 				<th>Mana</th>
 				<th>Soul</th>
 				<th>Item</th>
 				<th>Reagent</th>
-				<th>Vocations</th>
+				<th>Vocações</th>
 				</thead>
 				<tbody>
 				{% set i = 0 %}
@@ -156,11 +156,11 @@
 		<section id="rune" class="tab-panel">
 			<table id="tb_runeSpells">
 				<thead>
-				<th>Name</th>
+				<th>Nome</th>
 				<th>Level</th>
 				<th>Magic Level</th>
 				<th>Item</th>
-				<th>Vocations</th>
+				<th>Vocações</th>
 				</thead>
 				<tbody>
 				{% set i = 0 %}

@@ -1,5 +1,5 @@
 <?php
-$topPlayers = getTopPlayers(5);
+$topPlayers = getTopPlayers(10);
 foreach($topPlayers as &$player) {
 	$outfit_url = '';
 	if (setting('core.online_outfit')) {

@@ -1,49 +1,96 @@
 <div class="row justify-content-center">
-	<div class="col-md-6">
+	<div class="col-md-7">
 		<div class="card rasta-card">
 			<div class="card-header">
 				<h4 class="mb-0">Criar Personagem</h4>
 			</div>
 			<div class="card-body">
-				{% if errors is not empty %}
+				<p class="mb-3">Escolha um nome{% if config.character_samples|length > 1 %}, vocação{% endif %}{% if config.character_towns|length > 1 %}, cidade{% endif %} e sexo para seu personagem.<br>
+				O nome não deve violar as <a href="{{ getLink('rules') }}">Regras do {{ config.lua.serverName }}</a>.</p>
+
+				{% if account_logged.getPlayersList(true)|length >= setting('core.characters_per_account') %}
 				<div class="alert alert-danger bg-danger bg-opacity-10 border-danger text-light">
-					{% for error in errors %}{{ error }}<br>{% endfor %}
+					Você atingiu o número máximo de personagens. Delete um antes de criar outro.
 				</div>
 				{% endif %}
-				<form action="{{ getLink('account/characters/create') }}" method="post">
+
+				<form id="form" action="{{ getLink('account/characters/create') }}" method="post">
 					{{ csrf() }}
 					<input type="hidden" name="save" value="1">
+
+					{{ hook('HOOK_ACCOUNT_CREATE_CHARACTER_BEFORE_FIRST_TABLE') }}
+
 					<div class="mb-3">
-						<label class="form-label text-light fw-bold">Nome do Personagem:</label>
-						<input type="text" name="name" class="form-control" maxlength="30" value="{{ name }}">
+						<label for="character_name" class="form-label text-light fw-bold">Nome do Personagem:</label>
+						<input form="form" type="text" name="name" id="character_name" class="form-control"
+							value="{{ name }}" size="{{ setting('core.create_character_name_max_length') }}"
+							maxlength="{{ setting('core.create_character_name_max_length') }}"
+							placeholder="Digite o nome do personagem">
+						{% if not save or errors.name is defined %}
+						<div class="text-danger small mt-1">Digite o nome do personagem.</div>
+						{% endif %}
 					</div>
+
 					<div class="mb-3">
 						<label class="form-label text-light fw-bold">Sexo:</label>
-						<select name="sex" class="form-control">
-							<option value="0" {% if sex == 0 %}selected{% endif %}>Feminino</option>
-							<option value="1" {% if sex == 1 %}selected{% endif %}>Masculino</option>
-						</select>
+						<div class="d-flex gap-4">
+							{% set i = 0 %}
+							{% for id, gender in config.genders|reverse(true) %}
+							{% set i = i + 1 %}
+							<div class="form-check">
+								<input form="form" class="form-check-input" type="radio" name="sex" id="sex{{ i }}" value="{{ id }}"{% if sex is not null and sex == id %} checked{% endif %}>
+								<label class="form-check-label text-light" for="sex{{ i }}">{{ gender|lower }}</label>
+							</div>
+							{% endfor %}
+						</div>
 					</div>
+
+					{{ hook('HOOK_ACCOUNT_CREATE_CHARACTER_BEFORE_VOCATION') }}
+
+					{% if config.character_samples|length > 1 %}
 					<div class="mb-3">
 						<label class="form-label text-light fw-bold">Vocação:</label>
-						<select name="vocation" class="form-control">
-							{% for id, voc in config.vocations %}
-								<option value="{{ id }}" {% if vocation == id %}selected{% endif %}>{{ voc.name }}</option>
+						<div class="row">
+							{% for key, sample_char in config.character_samples %}
+							<div class="col-md-4">
+								<div class="form-check">
+									<input form="form" class="form-check-input" type="radio" name="vocation" id="vocation{{ key }}" value="{{ key }}"{% if vocation is not null and vocation == key %} checked{% endif %}>
+									<label class="form-check-label text-light" for="vocation{{ key }}">{{ config['vocations'][key] }}</label>
+								</div>
+							</div>
 							{% endfor %}
-						</select>
+						</div>
 					</div>
+					{% endif %}
+
+					{{ hook('HOOK_ACCOUNT_CREATE_CHARACTER_BEFORE_TOWNS') }}
+
+					{% if config.character_towns|length > 1 %}
 					<div class="mb-3">
 						<label class="form-label text-light fw-bold">Cidade:</label>
-						<select name="town" class="form-control">
-							{% for id, townName in config.towns %}
-								<option value="{{ id }}" {% if town == id %}selected{% endif %}>{{ townName }}</option>
+						<div class="row">
+							{% for town_id in config.character_towns %}
+							<div class="col-md-3">
+								<div class="form-check">
+									<input form="form" class="form-check-input" type="radio" name="town" id="town{{ town_id }}" value="{{ town_id }}"{% if town is not null and town == town_id %} checked{% endif %}>
+									<label class="form-check-label text-light" for="town{{ town_id }}">{{ config.towns[town_id] }}</label>
+								</div>
+							</div>
 							{% endfor %}
-						</select>
+						</div>
 					</div>
-					<button type="submit" class="btn btn-leaf">Criar Personagem</button>
-					<a href="{{ getLink('account/manage') }}" class="btn btn-outline-light ms-2">Voltar</a>
+					{% endif %}
+
+					{{ hook('HOOK_ACCOUNT_CREATE_CHARACTER_AFTER_TOWNS') }}
+					{{ hook('HOOK_ACCOUNT_CREATE_CHARACTER_AFTER_SECOND_TABLE') }}
+
+					<div class="d-flex gap-2 mt-4">
+						<button type="submit" class="btn btn-leaf">Criar Personagem</button>
+						<a href="{{ getLink('account/manage') }}" class="btn btn-outline-light">Voltar</a>
+					</div>
 				</form>
 			</div>
 		</div>
 	</div>
 </div>
+<script type="text/javascript" src="tools/check_name.js"></script>

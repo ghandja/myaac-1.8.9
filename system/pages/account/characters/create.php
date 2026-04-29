@@ -13,7 +13,7 @@ use MyAAC\CreateCharacter;
 
 defined('MYAAC') or die('Direct access not allowed!');
 
-$title = 'Create Character';
+$title = 'Criar Personagem';
 require PAGES . 'account/base.php';
 
 if(!$logged) {

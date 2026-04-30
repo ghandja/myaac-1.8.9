@@ -9,3 +9,5 @@ key.pem
 images/items/
 images/animated-outfits/outfits_anim/
 images/animated-outfits/libs/
+
+tmp_*

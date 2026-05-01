@@ -306,7 +306,7 @@ if(setting('core.highscores_balance'))
 	$types['balance'] = 'Balance';
 
 if ($highscoresTTL > 0 && $cache->enabled()) {
-	echo '<small>*Note: Highscores are updated every' . ($highscoresTTL > 1 ? ' ' . $highscoresTTL : '') . ' minute' . ($highscoresTTL > 1 ? 's' : '') . '.</small><br/><br/>';
+	echo '<small>*Nota: Highscores são atualizados a cada' . ($highscoresTTL > 1 ? ' ' . $highscoresTTL : '') . ' minuto' . ($highscoresTTL > 1 ? 's' : '') . '.</small><br/><br/>';
 }
 
 /** @var Twig\Environment $twig */

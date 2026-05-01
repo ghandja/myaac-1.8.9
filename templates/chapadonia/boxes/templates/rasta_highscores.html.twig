@@ -1,25 +1,36 @@
 <div class="card rasta-card mb-3">
-	<div class="card-header">
-		<h6 class="mb-0 text-center text-white" style="font-size:2rem;">TOP 10 JOGADORES</h6>
+	<div class="card-header py-2" style="background: linear-gradient(135deg, #1a5c34, #0d2f1a);">
+		<h6 class="mb-0 text-center" style="font-size:1.1rem; letter-spacing:1px;">
+			<img src="images/items/3011.gif" width="20" height="20" class="me-1" onerror="this.style.display='none'" style="image-rendering:pixelated;vertical-align:middle;">
+			<span style="color:#f5c518;">TOP 10</span>
+			<span style="color:#fff;"> JOGADORES</span>
+		</h6>
 	</div>
 	<div class="card-body p-0">
 		{% for player in topPlayers %}
 		<a href="{{ getPlayerLink(player['name'], false) }}" class="top-player-item">
-			<span class="rank text-white">{{ player['rank'] }}</span>
+			<span class="rank-badge">{{ player['rank'] }}</span>
 			{% if setting('core.online_outfit') and player.outfit is defined %}
 			<img src="{{ player.outfit }}" alt="" class="outfit-img">
 			{% endif %}
 			<div class="player-info">
-				<span class="player-name {% if player['online'] %}text-leaf{% else %}text-danger{% endif %}">
+				<span class="player-name {% if player['online'] %}text-green{% else %}text-muted-off{% endif %}">
 					{{ player['name'] }}
 				</span>
-				<span class="player-level">Level {{ player['level'] }}</span>
+				<span class="player-level">
+					<img src="images/items/2815.gif" width="10" height="10" onerror="this.style.display='none'" style="image-rendering:pixelated;vertical-align:middle;margin-right:2px;">
+					Level {{ player['level'] }}
+				</span>
 			</div>
-			<span class="status-indicator {% if player['online'] %}online-dot{% else %}offline-dot{% endif %}"></span>
+			<span class="status-dot-box">
+				<span class="status-indicator {% if player['online'] %}online-dot{% else %}offline-dot{% endif %}"></span>
+			</span>
 		</a>
 		{% endfor %}
 	</div>
-	<div class="card-footer text-center p-1">
-		<a href="{{ getLink('highscores') }}" class="btn btn-outline-leaf btn-sm w-100">Ver Highscores</a>
+	<div class="card-footer text-center p-1" style="border-top:1px solid rgba(46,204,113,0.2);">
+		<a href="{{ getLink('highscores') }}" class="btn btn-outline-leaf btn-sm w-100" style="font-size:0.75rem;">
+			<i class="bi bi-trophy"></i> Ver Ranking Completo
+		</a>
 	</div>
 </div>

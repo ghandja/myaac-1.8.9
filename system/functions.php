@@ -1637,14 +1637,14 @@ function getAccountLoginByLabel()
 {
 	$ret = '';
 	if (config('account_login_by_email')) {
-		$ret = 'Email Address';
+		$ret = 'Email';
 		if (config('account_login_by_email_fallback')) {
-			$ret .= ' or ';
+			$ret .= ' ou ';
 		}
 	}
 
 	if (!config('account_login_by_email') || config('account_login_by_email_fallback')) {
-		$ret .= 'Account ' . (USE_ACCOUNT_NAME ? 'Name' : 'Number');
+		$ret .= 'Nome da Conta';
 	}
 
 	return $ret;
